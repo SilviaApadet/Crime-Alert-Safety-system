@@ -1,6 +1,6 @@
 # Crime-Alert-Safety-system
 
-The Crime Safety Report System is a full-stack web application that allows users to report crimes, view reported crimes, filter incidents by location and time, and subscribe to email alerts for nearby crimes. This system is built with ReactJS on the frontend and Node.js, Express, and MongoDB on the backend.
+The Crime Safety Report System is a full-stack web application that allows users to report crimes, view reported crimes, filter incidents by location and time, and subscribe to email alerts for nearby crimes. This system is built with ReactJS on the frontend.
 
 
 ## Table of Contents
