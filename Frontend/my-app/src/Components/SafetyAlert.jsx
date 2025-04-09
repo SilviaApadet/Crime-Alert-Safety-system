@@ -4,7 +4,7 @@ import { useState,useEffect } from "react";
 function SafetyAlert(){
     const [Alert,setAlert]=useState([])
     useEffect(()=>{
-        fetch('http://localhost:3000/alerts')
+        fetch('')
         .then((response)=>{
             return response.json()
         })
