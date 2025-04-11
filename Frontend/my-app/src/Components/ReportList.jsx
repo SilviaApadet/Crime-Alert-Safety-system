@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 
 
+
+
 const CrimeReportList = () => {
   const [reports, setReports] = useState([]);
+
+
 
 
   useEffect(() => {
@@ -10,6 +14,8 @@ const CrimeReportList = () => {
       .then((res) => res.json())
       .then((data) => setReports(data));
   }, []);
+
+
 
 
   return (
@@ -27,6 +33,8 @@ const CrimeReportList = () => {
               <p><strong>Date:</strong> {new Date(report.date).toLocaleDateString()}</p>
 
 
+
+
               {/* New Reporter Info */}
               <div className="mt-3 border-t pt-2">
                 <p><strong>Reported By:</strong> {report.name}</p>
@@ -42,8 +50,6 @@ const CrimeReportList = () => {
 };
 
 
+
+
 export default CrimeReportList;
-
-
-
-
