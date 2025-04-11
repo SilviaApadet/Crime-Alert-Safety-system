@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
+
 const ReportForm = () => {
   const handleSubmit = (values, { resetForm }) => {
     fetch("http://localhost:3000/reports", {
@@ -11,6 +12,7 @@ const ReportForm = () => {
       .then((res) => res.json())
       .then(() => resetForm());
   };
+
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -27,6 +29,7 @@ const ReportForm = () => {
     location: Yup.string().required("Location is required"),
     date: Yup.date().required("Date is required"),
   });
+
 
   return (
     <div className="p-4 max-w-md mx-auto">
@@ -89,5 +92,9 @@ const ReportForm = () => {
   );
 };
 
+
 export default ReportForm;
+
+
+
 
