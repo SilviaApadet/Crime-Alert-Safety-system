@@ -1,18 +1,15 @@
-// src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// Pages
-import Home from './pages/Home';
-import CrimeList from './pages/CrimeList';
-import ReportCrime from './pages/ReportCrime';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import NotFound from './pages/NotFound';
-import AlertSettings from './pages/AlertSettings';
-
-// Components
 import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import ReportList from './pages/ReportList';
+import ReportChart from './pages/ReportChart';
+import ReportForm from './pages/ReportForm';
+import AdminPanel from './pages/AdminPanel';
+import AlertSettings from './pages/AlertSettings';
+import SafetyAlert from './pages/SafetyAlert';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
@@ -22,11 +19,12 @@ const App = () => {
         <main className="container">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/crimes" element={<CrimeList />} />
-            <Route path="/report" element={<ReportCrime />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/report" element={<ReportForm />} />
+            <Route path="/reports" element={<ReportList />} />
+            <Route path="/chart" element={<ReportChart />} />
             <Route path="/alerts" element={<AlertSettings />} />
+            <Route path="/safety" element={<SafetyAlert />} />
+            <Route path="/admin" element={<AdminPanel />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
