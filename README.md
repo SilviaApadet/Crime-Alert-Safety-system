@@ -92,7 +92,10 @@ This will run the React app on `http://localhost:3000`.
 | `/`           | Home page                        |
 | `/login`      | Login form                       |
 | `/register`   | Register new user                |
-| `/report`     | Report a new crime               |
+
+| `/reportchart`| Report a new crime               |
+=======
+| `/report`     | Report a new crime            
 | `/crimes`     | View and filter reported crimes  |
 | `/alerts`     | Set alert location and radius    |
 
