@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 
 
-const CrimeReportList = () => {
+const ReportList = () => {
   const [reports, setReports] = useState([]);
 
 
@@ -52,4 +52,4 @@ const CrimeReportList = () => {
 
 
 
-export default CrimeReportList;
+export default ReportList;

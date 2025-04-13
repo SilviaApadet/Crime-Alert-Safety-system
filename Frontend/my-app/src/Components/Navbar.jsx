@@ -8,12 +8,11 @@ function Navbar() {
         <Link to="/">Crime Alert System</Link>
       </div>
       <div className="navbar-links">
-        <Link to="/">Home</Link>
         <Link to="/report">Report Crime</Link>
-        <Link to="/reports">View Reports</Link>
-        <Link to="/analysis">Crime Analysis</Link>
-        <Link to="/alerts">Safety Alerts</Link>
-        <Link to="/admin">Admin</Link>
+        <Link to="/reports">Report List</Link>
+        <Link to="/chart">Report Chart</Link>
+        <Link to="/alerts">Safety Alert</Link>
+        
       </div>
     </nav>
   );
