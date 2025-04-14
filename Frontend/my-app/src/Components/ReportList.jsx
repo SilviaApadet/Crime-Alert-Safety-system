@@ -10,7 +10,7 @@ const ReportList = () => {
 
 
   useEffect(() => {
-    fetch("http://localhost:3000/reports")
+    fetch("http://localhost:5000/reports")
       .then((res) => res.json())
       .then((data) => setReports(data));
   }, []);
@@ -19,12 +19,12 @@ const ReportList = () => {
 
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Crime Reports</h2>
+    <div className="report-container">
+      <h2 className="report-list">Crime Reports</h2>
       {reports.length === 0 ? (
         <p>No reports found.</p>
       ) : (
-        <div className="grid gap-4">
+        <div className="reporter-info">
           {reports.map((report) => (
             <div key={report.id} className="border p-4 rounded shadow-sm bg-white">
               <h3 className="text-xl font-semibold">{report.type}</h3>
@@ -48,6 +48,7 @@ const ReportList = () => {
     </div>
   );
 };
+
 
 
 

@@ -1,22 +1,19 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import {useState } from 'react';
 
 
 const ReportForm = () => {
   const handleSubmit = (values, { resetForm }) => {
-    console.log("Submitting report with values:", values); 
-  
     fetch("http://localhost:5000/reports", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     })
       .then((res) => res.json())
-      .then(() => resetForm())
-      .catch((err) => console.error("Submit error:", err));
+      .then(() => resetForm());
   };
-  
+
+
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(2, "Name must be at least 2 characters")
@@ -35,8 +32,8 @@ const ReportForm = () => {
 
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-xl font-semibold mb-4">Submit Crime Report</h2>
+    <div className="report-form-container">
+      <h2 className="form-title">Report a crime</h2>
       <Formik
         initialValues={{
           name: '',
@@ -50,43 +47,43 @@ const ReportForm = () => {
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        <Form className="space-y-3">
-          <div>
-            <label>Name:</label>
-            <Field name="name" className="w-full border p-1" />
-            <ErrorMessage name="name" component="div" className="text-red-500" />
+        <Form className="form">
+          <div className="form-group">
+            <label className="form-label">Name:</label>
+            <Field name="name" className="form-input" />
+            <ErrorMessage name="name" component="div" className="error-message" />
           </div>
-          <div>
-            <label>Age:</label>
-            <Field name="age" type="number" className="w-full border p-1" />
-            <ErrorMessage name="age" component="div" className="text-red-500" />
+          <div className="form-group">
+            <label className="form-label">Age:</label>
+            <Field name="age" type="number" className="form-input" />
+            <ErrorMessage name="age" component="div" className="error-message" />
           </div>
-          <div>
-            <label>Phone Number:</label>
-            <Field name="phone" className="w-full border p-1" />
-            <ErrorMessage name="phone" component="div" className="text-red-500" />
+          <div className="form-group">
+            <label className="form-label">Phone Number:</label>
+            <Field name="phone" className="form-input" />
+            <ErrorMessage name="phone" component="div" className="error-message" />
           </div>
-          <div>
-            <label>Type of Crime:</label>
-            <Field name="type" className="w-full border p-1" />
-            <ErrorMessage name="type" component="div" className="text-red-500" />
+          <div className="form-group">
+            <label className="form-label">Type of Crime:</label>
+            <Field name="type" className="form-input" />
+            <ErrorMessage name="type" component="div" className="error-message" />
           </div>
-          <div>
-            <label>Description:</label>
-            <Field name="description" as="textarea" className="w-full border p-1" />
-            <ErrorMessage name="description" component="div" className="text-red-500" />
+          <div className="form-group">
+            <label className="form-label">Description:</label>
+            <Field name="description" as="textarea" className="form-input" />
+            <ErrorMessage name="description" component="div" className="error-message" />
           </div>
-          <div>
-            <label>Location:</label>
-            <Field name="location" className="w-full border p-1" />
-            <ErrorMessage name="location" component="div" className="text-red-500" />
+          <div className="form-group">
+            <label className="form-label">Location:</label>
+            <Field name="location" className="form-input" />
+            <ErrorMessage name="location" component="div" className="error-message" />
           </div>
-          <div>
-            <label>Date of Incident:</label>
-            <Field name="date" type="date" className="w-full border p-1" />
-            <ErrorMessage name="date" component="div" className="text-red-500" />
+          <div className="form-group">
+            <label className="form-label">Date of Incident:</label>
+            <Field name="date" type="date" className="form-input" />
+            <ErrorMessage name="date" component="div" className="error-message" />
           </div>
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+          <button type="submit" className="submit-button">
             Submit Report
           </button>
         </Form>
@@ -97,7 +94,6 @@ const ReportForm = () => {
 
 
 export default ReportForm;
-
 
 
 

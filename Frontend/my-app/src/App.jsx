@@ -7,24 +7,34 @@ import ReportList from './Components/ReportList';
 import ReportChart from './Components/ReportChart';
 import ReportForm from './Components/ReportForm';
 import SafetyAlert from './Components/SafetyAlert';
+import Home from './Components/Home';
+import './App.css'
+
 
 
 const App = () => {
   return (
+    <>
+     <div>
+      <Home/>
+    </div>
     <Router>
       <div className="app">
         <Navbar />
         <main className="container">
-          <Routes>
+          <Routes> 
+            
             <Route path="/report" element={<ReportForm />} />
             <Route path="/reports" element={<ReportList />} />
-            <Route path="/chart" element={<ReportChart />} />
+            <Route path="/chart" element={<ReportChart />} /> 
             <Route path="/alerts" element={<SafetyAlert />} />
-           </Routes>
+          </Routes>
         </main>
       </div>
     </Router>
-  );
+    
+    </>
+  )
 };
 
 export default App;
