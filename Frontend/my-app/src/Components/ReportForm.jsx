@@ -2,8 +2,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
 
-const ReportForm = () => {
+const ReportForm = ({ onReportSubmitted }) => {
   const [submitError, setSubmitError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
@@ -16,22 +17,29 @@ const ReportForm = () => {
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Server error response:", errorText);
-        throw new Error("Failed to submit report. Server responded with an error.");
+        throw new Error("Failed to submit report.");
       }
 
       const data = await response.json();
       console.log("Successfully submitted:", data);
+
       resetForm();
-      setSubmitError(""); // Clear error if successful
+      setSubmitError("");
+      setSuccessMessage("Report submitted successfully.");
+
+      if (onReportSubmitted) {
+        onReportSubmitted(); // trigger parent refresh
+      }
     } catch (err) {
       console.error("Submission failed:", err.message);
-      setSubmitError("Submission failed. Please try again later.");
+      setSubmitError("Submission failed. Please try again.");
+      setSuccessMessage("");
     }
   };
 
   const validationSchema = Yup.object({
     name: Yup.string().min(2).required("Name is required"),
-    age: Yup.number().min(13).required("Age is required"),
+    age: Yup.number().min(13, "You must be at least 13").required("Age is required"),
     phone: Yup.string().matches(/^\d{10}$/, "Phone number must be 10 digits").required(),
     type: Yup.string().required("Type is required"),
     description: Yup.string().min(10).required("Description is required"),
@@ -43,6 +51,8 @@ const ReportForm = () => {
     <div className="report-form-container">
       <h2 className="form-title">Report a Crime</h2>
       {submitError && <div className="error-message">{submitError}</div>}
+      {successMessage && <div className="success-message">{successMessage}</div>}
+
       <Formik
         initialValues={{
           name: '',
