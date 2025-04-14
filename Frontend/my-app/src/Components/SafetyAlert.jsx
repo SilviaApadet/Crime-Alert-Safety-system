@@ -4,7 +4,7 @@ import { useState,useEffect } from "react";
 function SafetyAlert(){
     const [Alert,setAlert]=useState([])
     useEffect(()=>{
-        fetch('')
+        fetch('http://localhost:3000/alerts')
         .then((response)=>{
             return response.json()
         })
@@ -16,9 +16,9 @@ function SafetyAlert(){
         })   
     },[])
     return(
-        <div>
-            <h2>Recent Safety Alerts</h2>
-            <table>
+        <div  className="alert-container">
+             <h2 className="alert-heading">🚨 Recent Safety Alerts</h2>
+            <table className="alert-table">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -47,4 +47,4 @@ function SafetyAlert(){
         </div>
     )
 }
-export default SafetyAlert;
+export default SafetyAlert; 

@@ -33,7 +33,7 @@ function ReportChart() {
 
   return (
     <div className="chart-container">
-      <h2>Crime Report Statistics</h2>
+      <h2 className="chart-title">Crime Report Statistics</h2>
       <Bar 
         data={chartData}
         options={{
