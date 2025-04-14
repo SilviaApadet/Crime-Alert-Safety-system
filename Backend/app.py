@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from models import db, CrimeReport
 from app.routes.admin import admin_bp
 from datetime import datetime
 
+# Initialize the Flask app first
 app = Flask(__name__)
 
 # Configuration
