@@ -1,19 +1,22 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import {useState } from 'react';
 
 
 const ReportForm = () => {
   const handleSubmit = (values, { resetForm }) => {
-    fetch("http://localhost:3000/reports", {
+    console.log("Submitting report with values:", values); 
+  
+    fetch("http://localhost:5000/reports", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     })
       .then((res) => res.json())
-      .then(() => resetForm());
+      .then(() => resetForm())
+      .catch((err) => console.error("Submit error:", err));
   };
-
-
+  
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(2, "Name must be at least 2 characters")
