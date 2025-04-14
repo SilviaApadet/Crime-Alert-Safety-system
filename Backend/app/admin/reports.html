@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crime Reports</title>
+</head>
+<body>
+  <h1>All Crime Reports</h1>
+  <ul>
+    {% for report in reports %}
+      <li><strong>{{ report.title }}</strong>: {{ report.description }}</li>
+    {% endfor %}
+  </ul>
+  <a href="/admin">Back to Dashboard</a>
+</body>
+</html>

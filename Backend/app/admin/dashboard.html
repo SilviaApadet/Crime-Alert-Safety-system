@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <meta name="description" content="Admin dashboard to manage and monitor crime reports in your region.">
+    <meta name="author" content="George Maina Kairu">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>Admin Dashboard</h1>
+        <nav>
+            <button class="btn" onclick="window.location.href='/admin/reports/add'" aria-label="Add new report">Add New Report</button>
+            <button class="btn" onclick="markAsResolved()" aria-label="Mark selected reports as resolved">Mark Selected as Resolved</button>
+            <button class="btn" onclick="deleteReports()" aria-label="Delete selected reports">Delete Selected Reports</button>
+            <button class="btn" onclick="toggleDarkMode()" aria-label="Toggle Dark Mode">🌙</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Statistics Section -->
+        <section class="statistics">
+            <div class="stat-item">
+                <h3>Total Crime Reports</h3>
+                <p>{{ report_count }}</p>
+            </div>
+            <div class="stat-item">
+                <h3>Unresolved Reports</h3>
+                <p>{{ unresolved_count }}</p>
+            </div>
+            <div class="stat-item">
+                <h3>Resolved Reports</h3>
+                <p>{{ resolved_count }}</p>
+            </div>
+        </section>
+
+        <!-- Search Bar -->
+        <section class="search">
+            <label for="reportSearch" class="visually-hidden">Search Reports</label>
+            <input type="text" id="reportSearch" placeholder="Search reports..." onkeyup="filterReports()">
+        </section>
+
+        <!-- Recent Reports -->
+        <section class="recent-reports">
+            <h2>Recent Crime Reports</h2>
+            <table id="recentReportsTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for report in reports %}
+                        <tr>
+                            <td>{{ report.title }}</td>
+                            <td>{{ report.description }}</td>
+                            <td>{{ report.created_at }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Detailed Reports Section -->
+        <section class="detailed-reports">
+            <h2>All Crime Reports</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="reportBody">
+                    {% if reports %}
+                        {% for report in reports %}
+                            <tr>
+                                <td><input type="checkbox" class="selectReport" value="{{ report.id }}"></td>
+                                <td>{{ report.title }}</td>
+                                <td>{{ report.description }}</td>
+                                <td>{{ report.created_at }}</td>
+                                <td>
+                                    <button class="btn" onclick="viewReport({{ report.id }})">View</button>
+                                    <button class="btn" onclick="deleteReport({{ report.id }})">Delete</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="5">No reports available.</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Notifications -->
+        <section class="notifications" aria-live="polite">
+            <div class="alert">
+                <strong>New Report Submitted!</strong> A new crime report has been added to the system.
+            </div>
+            <div class="alert warning">
+                <strong>Warning:</strong> Some reports need urgent attention.
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Admin Dashboard. All rights reserved.</p>
+    </footer>
+
+    <canvas id="crimeReportChart"></canvas>
+</body>
+</html>
