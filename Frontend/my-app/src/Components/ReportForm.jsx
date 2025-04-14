@@ -1,39 +1,48 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
+import { useState } from 'react';
 
 const ReportForm = () => {
-  const handleSubmit = (values, { resetForm }) => {
-    fetch("http://localhost:5000/reports", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    })
-      .then((res) => res.json())
-      .then(() => resetForm());
+  const [submitError, setSubmitError] = useState("");
+
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      const response = await fetch("http://localhost:5000/reports", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Server error response:", errorText);
+        throw new Error("Failed to submit report. Server responded with an error.");
+      }
+
+      const data = await response.json();
+      console.log("Successfully submitted:", data);
+      resetForm();
+      setSubmitError(""); // Clear error if successful
+    } catch (err) {
+      console.error("Submission failed:", err.message);
+      setSubmitError("Submission failed. Please try again later.");
+    }
   };
 
-
   const validationSchema = Yup.object({
-    name: Yup.string()
-      .min(2, "Name must be at least 2 characters")
-      .required("Name is required"),
-    age: Yup.number()
-      .min(13, "You must be at least 13 years old to report")
-      .required("Age is required"),
-    phone: Yup.string()
-      .matches(/^\d{10}$/, "Phone number must be 10 digits")
-      .required("Phone number is required"),
+    name: Yup.string().min(2).required("Name is required"),
+    age: Yup.number().min(13).required("Age is required"),
+    phone: Yup.string().matches(/^\d{10}$/, "Phone number must be 10 digits").required(),
     type: Yup.string().required("Type is required"),
-    description: Yup.string().min(10, "At least 10 characters").required(),
+    description: Yup.string().min(10).required("Description is required"),
     location: Yup.string().required("Location is required"),
     date: Yup.date().required("Date is required"),
   });
 
-
   return (
     <div className="report-form-container">
-      <h2 className="form-title">Report a crime</h2>
+      <h2 className="form-title">Report a Crime</h2>
+      {submitError && <div className="error-message">{submitError}</div>}
       <Formik
         initialValues={{
           name: '',
@@ -48,41 +57,14 @@ const ReportForm = () => {
         validationSchema={validationSchema}
       >
         <Form className="form">
-          <div className="form-group">
-            <label className="form-label">Name:</label>
-            <Field name="name" className="form-input" />
-            <ErrorMessage name="name" component="div" className="error-message" />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Age:</label>
-            <Field name="age" type="number" className="form-input" />
-            <ErrorMessage name="age" component="div" className="error-message" />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Phone Number:</label>
-            <Field name="phone" className="form-input" />
-            <ErrorMessage name="phone" component="div" className="error-message" />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Type of Crime:</label>
-            <Field name="type" className="form-input" />
-            <ErrorMessage name="type" component="div" className="error-message" />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Description:</label>
-            <Field name="description" as="textarea" className="form-input" />
-            <ErrorMessage name="description" component="div" className="error-message" />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Location:</label>
-            <Field name="location" className="form-input" />
-            <ErrorMessage name="location" component="div" className="error-message" />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Date of Incident:</label>
-            <Field name="date" type="date" className="form-input" />
-            <ErrorMessage name="date" component="div" className="error-message" />
-          </div>
+          <FormGroup label="Name:" name="name" />
+          <FormGroup label="Age:" name="age" type="number" />
+          <FormGroup label="Phone Number:" name="phone" />
+          <FormGroup label="Type of Crime:" name="type" />
+          <FormGroup label="Description:" name="description" as="textarea" />
+          <FormGroup label="Location:" name="location" />
+          <FormGroup label="Date of Incident:" name="date" type="date" />
+
           <button type="submit" className="submit-button">
             Submit Report
           </button>
@@ -92,8 +74,13 @@ const ReportForm = () => {
   );
 };
 
+// Reusable form group component
+const FormGroup = ({ label, name, type = "text", as = "input" }) => (
+  <div className="form-group">
+    <label className="form-label">{label}</label>
+    <Field name={name} type={type} as={as} className="form-input" />
+    <ErrorMessage name={name} component="div" className="error-message" />
+  </div>
+);
 
 export default ReportForm;
-
-
-
